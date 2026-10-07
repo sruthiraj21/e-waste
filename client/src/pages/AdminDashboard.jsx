@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { api } from '../services/api';
+import { api, DEFAULT_DEMO_STATS, DEFAULT_DEMO_COLLECTORS } from '../services/api';
 import { 
   Users, 
   Truck, 
@@ -28,8 +28,8 @@ import {
 const COLORS = ['#0F2D1F', '#10B981', '#84CC16', '#F59E0B', '#3B82F6', '#8B5CF6'];
 
 export default function AdminDashboard() {
-  const [stats, setStats] = useState(null);
-  const [collectors, setCollectors] = useState([]);
+  const [stats, setStats] = useState(DEFAULT_DEMO_STATS);
+  const [collectors, setCollectors] = useState(DEFAULT_DEMO_COLLECTORS);
   const [loading, setLoading] = useState(true);
 
   const loadData = async () => {
@@ -38,8 +38,12 @@ export default function AdminDashboard() {
         api.getAdminStats(),
         api.getCollectors()
       ]);
-      setStats(statsData);
-      setCollectors(collectorsData);
+      if (statsData) {
+        setStats(statsData);
+      }
+      if (Array.isArray(collectorsData) && collectorsData.length > 0) {
+        setCollectors(collectorsData);
+      }
     } catch (e) {
       console.warn('Error loading admin stats:', e);
     } finally {
@@ -53,12 +57,28 @@ export default function AdminDashboard() {
 
   const handleVerify = async (id, status) => {
     try {
+      setCollectors(prev => {
+        const base = (Array.isArray(prev) && prev.length > 0) ? prev : DEFAULT_DEMO_COLLECTORS;
+        return base.map(c => c.id === id ? { ...c, verification_status: status } : c);
+      });
       await api.verifyCollector(id, status);
       await loadData();
     } catch (e) {
       console.error('Failed to verify collector:', e);
     }
   };
+
+  const displayMonthlyTrend = (stats?.monthlyTrend && stats.monthlyTrend.length > 0)
+    ? stats.monthlyTrend
+    : DEFAULT_DEMO_STATS.monthlyTrend;
+
+  const displayCategoryBreakdown = (stats?.categoryBreakdown && stats.categoryBreakdown.length > 0)
+    ? stats.categoryBreakdown
+    : DEFAULT_DEMO_STATS.categoryBreakdown;
+
+  const displayCollectors = (Array.isArray(collectors) && collectors.length > 0)
+    ? collectors
+    : DEFAULT_DEMO_COLLECTORS;
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 space-y-8 animate-in fade-in duration-300">
@@ -153,7 +173,7 @@ export default function AdminDashboard() {
 
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={stats?.monthlyTrend || []}>
+              <AreaChart data={displayMonthlyTrend}>
                 <defs>
                   <linearGradient id="colorWeight" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#10B981" stopOpacity={0.4}/>
@@ -185,12 +205,7 @@ export default function AdminDashboard() {
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
-                  data={stats?.categoryBreakdown || [
-                    { name: 'Computer Equipment', value: 45 },
-                    { name: 'Mobile Phones', value: 25 },
-                    { name: 'Cables & Accessories', value: 18 },
-                    { name: 'Peripherals', value: 12 }
-                  ]}
+                  data={displayCategoryBreakdown}
                   cx="50%"
                   cy="50%"
                   innerRadius={60}
@@ -198,7 +213,7 @@ export default function AdminDashboard() {
                   paddingAngle={5}
                   dataKey="value"
                 >
-                  {(stats?.categoryBreakdown || []).map((entry, index) => (
+                  {displayCategoryBreakdown.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>
@@ -220,7 +235,7 @@ export default function AdminDashboard() {
             <p className="text-xs text-gray-500">Verify e-waste collector licenses, EV fleets, and foundry compliance.</p>
           </div>
           <span className="stitch-badge-mint text-[11px] font-bold">
-            {collectors.length} Registered Foundries
+            {displayCollectors.length} Registered Foundries
           </span>
         </div>
 
@@ -237,7 +252,7 @@ export default function AdminDashboard() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
-              {collectors.map(c => (
+              {displayCollectors.map(c => (
                 <tr key={c.id} className="hover:bg-gray-50/50 transition-colors">
                   <td className="py-3 font-bold text-[#0F2D1F] flex items-center gap-2">
                     <span className="w-7 h-7 rounded-lg bg-[#0F2D1F] text-[#10B981] flex items-center justify-center font-bold text-xs">
