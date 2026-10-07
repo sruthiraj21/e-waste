@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # EcoCycle — Responsible E-Waste Circularity Platform 🌱
 
 EcoCycle is a full-stack, hackathon-ready e-waste collection platform connecting households and organizations with verified e-waste collectors. Built with the **Circularity Interface System** designed in **Google Stitch**, EcoCycle transforms e-waste recycling from an administrative chore into a high-end digital circularity experience.
@@ -77,3 +78,7 @@ To migrate to a live Supabase instance:
 1. Open your Supabase project SQL Editor.
 2. Run the SQL script found in `supabase/schema.sql`.
 3. Set your `SUPABASE_URL` and `SUPABASE_ANON_KEY` in `.env`.
+=======
+# e-waste
+AI-powered e-waste collection platform connecting users with verified collectors for responsible recycling, smart pickup scheduling, and environmental impact tracking.
+>>>>>>> eee25f862f76b08d5fe1e6d060c41c7b57e82f5d
