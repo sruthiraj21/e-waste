@@ -17,6 +17,19 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Base route
+app.get('/', (req, res) => {
+  res.json({
+    status: 'online',
+    platform: 'EcoCycle E-Waste Circularity Platform',
+    message: 'EcoCycle Backend API is running',
+    endpoints: {
+      health: '/health',
+      status: '/api/status'
+    }
+  });
+});
+
 // API routes
 app.use('/api', apiRouter);
 
@@ -29,7 +42,11 @@ app.get('/health', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`🌱 EcoCycle Backend Server running on http://localhost:${PORT}`);
-  console.log(`📡 Ready for AI Scans, Collector Logistics & Supabase operations.`);
-});
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`🌱 EcoCycle Backend Server running on http://localhost:${PORT}`);
+    console.log(`📡 Ready for AI Scans, Collector Logistics & Supabase operations.`);
+  });
+}
+
+export default app;
