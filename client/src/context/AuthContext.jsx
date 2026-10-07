@@ -63,40 +63,61 @@ export function AuthProvider({ children }) {
     }
   }, [currentUser]);
 
+  // Validate session on load
+  useEffect(() => {
+    const token = localStorage.getItem('ecocycle_token');
+    if (token) {
+      api.getCurrentUser(currentUser?.id).then(res => {
+        if (res?.user) {
+          setCurrentUser(res.user);
+          setRole(res.user.role);
+        }
+      }).catch(() => {});
+    }
+  }, []);
+
   const switchRole = (newRole) => {
     const profile = DEMO_PROFILES[newRole] || DEMO_PROFILES.USER;
     setCurrentUser(profile);
     setRole(newRole);
   };
 
-  const login = async (email, selectedRole = 'USER') => {
+  const login = async (email, password = 'EcoCyclePass2026!') => {
     try {
-      const data = await api.login(email, selectedRole);
+      const data = await api.login(email, password);
       if (data.user) {
         setCurrentUser(data.user);
         setRole(data.user.role);
         return data.user;
       }
     } catch (e) {
-      console.warn('API login failed, falling back to local profile:', e);
-      const profile = DEMO_PROFILES[selectedRole] || {
-        ...DEMO_PROFILES.USER,
-        email,
-        full_name: email.split('@')[0]
-      };
-      setCurrentUser(profile);
-      setRole(selectedRole);
-      return profile;
+      console.warn('API login failed:', e);
+      throw e;
+    }
+  };
+
+  const register = async (userData) => {
+    try {
+      const data = await api.register(userData);
+      if (data.user) {
+        setCurrentUser(data.user);
+        setRole(data.user.role);
+        return data.user;
+      }
+    } catch (e) {
+      console.warn('API registration failed:', e);
+      throw e;
     }
   };
 
   const logout = () => {
     setCurrentUser(null);
     localStorage.removeItem('ecocycle_user');
+    localStorage.removeItem('ecocycle_token');
   };
 
   return (
-    <AuthContext.Provider value={{ currentUser, role, setCurrentUser, switchRole, login, logout }}>
+    <AuthContext.Provider value={{ currentUser, role, setCurrentUser, switchRole, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );

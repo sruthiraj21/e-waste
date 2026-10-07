@@ -7,21 +7,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DATA_FILE = path.join(__dirname, '../data/store.json');
 
-// Check for live Supabase credentials
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_ANON_KEY;
-let supabase = null;
-if (supabaseUrl && supabaseKey && supabaseUrl !== 'YOUR_SUPABASE_URL') {
-  try {
-    supabase = createClient(supabaseUrl, supabaseKey);
-    console.log('Connected to live Supabase backend at:', supabaseUrl);
-  } catch (e) {
-    console.warn('Could not initialize Supabase client:', e.message);
-  }
-}
-
-// Initial Realistic Indian Context Seed Data
-const INITIAL_DATA = {
+// Initial Dev Seed Data
+const INITIAL_DEV_DATA = {
   profiles: [
     {
       id: 'usr_sruthi_101',
@@ -129,74 +116,25 @@ const INITIAL_DATA = {
       confidence: 94,
       estimated_value: 1200,
       estimated_weight: 2.4,
-      ai_result: {
-        recoveryYield: '89%',
-        gold: '0.034g',
-        copper: '14.2g',
-        specs: 'Aluminum Unibody Chassis • Core i7 / M1 Pro',
-        hazardStatus: 'Zero Hazardous Leaks'
-      },
+      specs: 'Aluminum Unibody Chassis • Core i7 / M1 Pro',
+      ai_result: { recoveryYield: '89%', gold: '0.034g', copper: '14.2g' },
       status: 'IN_TRANSIT',
       created_at: '2026-10-06T08:30:00Z'
-    },
-    {
-      id: 'item_iphone_02',
-      user_id: 'usr_sruthi_101',
-      image_url: 'https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=600&q=80',
-      device_name: 'iPhone 13 Pro',
-      category: 'Mobile Phones',
-      condition: 'Grade A- (Motherboard intact)',
-      confidence: 96,
-      estimated_value: 950,
-      estimated_weight: 0.24,
-      ai_result: {
-        recoveryYield: '93%',
-        gold: '0.024g',
-        copper: '8.6g'
-      },
-      status: 'RECYCLED',
-      created_at: '2026-10-05T14:15:00Z'
-    },
-    {
-      id: 'item_headphone_03',
-      user_id: 'usr_sruthi_101',
-      image_url: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80',
-      device_name: 'Sony WH-1000XM4',
-      category: 'Peripherals',
-      condition: 'Refurbished Grade B',
-      confidence: 92,
-      estimated_value: 700,
-      estimated_weight: 0.35,
-      status: 'RECYCLED',
-      created_at: '2026-10-01T11:20:00Z'
-    },
-    {
-      id: 'item_charger_04',
-      user_id: 'usr_sruthi_101',
-      image_url: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80',
-      device_name: 'Dell XPS 15 Charger',
-      category: 'Cables & Accessories',
-      condition: 'Pure Copper Harvested',
-      confidence: 97,
-      estimated_value: 220,
-      estimated_weight: 0.45,
-      status: 'RECYCLED',
-      created_at: '2026-09-24T16:00:00Z'
     }
   ],
   pickups: [
     {
       id: 'pku_active_8954',
+      tracking_id: 'EC-8954-BLR',
       user_id: 'usr_sruthi_101',
       collector_id: 'col_rec_1',
       ewaste_item_id: 'item_laptop_01',
       pickup_address: 'Flat 402, Green Glen Layout, Bellandur, Bengaluru 560103',
       scheduled_date: '2026-10-07',
       scheduled_time: 'Today, 3:30 PM',
-      status: 'ON_THE_WAY', // REQUESTED -> ACCEPTED -> COLLECTOR_ASSIGNED -> ON_THE_WAY -> COLLECTED -> RECYCLED
+      status: 'ON_THE_WAY',
       status_note: 'Courier en route to Valo Foundry • 70% complete • ETA 25 mins',
       progress_percent: 70,
-      tracking_id: 'EC-8954-BLR',
       user_lat: 12.9352,
       user_lng: 77.6245,
       collector_lat: 12.9510,
@@ -212,27 +150,13 @@ const INITIAL_DATA = {
       points: 100,
       reason: 'iPhone 13 Pro Melt & Recovery Cycle Complete',
       created_at: '2026-10-06T18:00:00Z'
-    },
-    {
-      id: 'rew_2',
-      user_id: 'usr_sruthi_101',
-      points: 150,
-      reason: 'Sony WH-1000XM4 Refurbished & Re-homed',
-      created_at: '2026-10-02T12:00:00Z'
-    },
-    {
-      id: 'rew_3',
-      user_id: 'usr_sruthi_101',
-      points: 50,
-      reason: 'Dell XPS Charger Copper Harvested',
-      created_at: '2026-09-25T17:00:00Z'
     }
   ],
   certificates: [
     {
       id: 'cert_89120',
       user_id: 'usr_sruthi_101',
-      pickup_id: 'pku_completed_legacy',
+      pickup_id: 'pku_active_8954',
       certificate_number: 'CERT-EC-2026-89120-BLR',
       device_name: 'iPhone 13 Pro (128GB Midnight)',
       batch_id: 'Batch #89120',
@@ -256,76 +180,128 @@ const INITIAL_DATA = {
       message: 'Vikram from GreenCycle Services is arriving in ~25 mins for your MacBook Pro.',
       read: false,
       created_at: '2026-10-07T10:30:00Z'
-    },
-    {
-      id: 'notif_2',
-      user_id: 'usr_sruthi_101',
-      title: 'Certificate Ready 🌱',
-      message: 'Recycling certificate CERT-EC-2026-89120 is verified and ready to view.',
-      read: true,
-      created_at: '2026-10-06T18:10:00Z'
     }
   ]
 };
 
-// In-Memory store initialized from disk or defaults
-class DatabaseService {
+class SupabaseDataService {
   constructor() {
-    this.ensureDataDir();
-    this.data = this.loadData();
+    this.initSupabase();
+    this.ensureDevStore();
   }
 
-  ensureDataDir() {
-    const dir = path.dirname(DATA_FILE);
-    if (!fs.existsSync(dir)) {
-      fs.mkdirSync(dir, { recursive: true });
-    }
-  }
+  initSupabase() {
+    const supabaseUrl = process.env.SUPABASE_URL?.trim();
+    const supabaseKey = process.env.SUPABASE_ANON_KEY?.trim();
 
-  loadData() {
-    try {
-      if (fs.existsSync(DATA_FILE)) {
-        const content = fs.readFileSync(DATA_FILE, 'utf-8');
-        return JSON.parse(content);
+    if (
+      supabaseUrl && 
+      supabaseKey && 
+      supabaseUrl !== 'your-supabase-url' && 
+      supabaseUrl.startsWith('http')
+    ) {
+      try {
+        this.supabase = createClient(supabaseUrl, supabaseKey, {
+          auth: { persistSession: false }
+        });
+        this.isLive = true;
+        console.log('✅ [EcoCycle DB] Connected to LIVE Supabase at:', supabaseUrl);
+      } catch (err) {
+        console.error('❌ [EcoCycle DB] Failed to initialize Supabase client:', err.message);
+        this.isLive = false;
+        this.supabase = null;
       }
-    } catch (e) {
-      console.warn('Error reading store file, resetting to defaults:', e.message);
+    } else {
+      this.isLive = false;
+      this.supabase = null;
+      console.log('ℹ️  [EcoCycle DB] Supabase credentials not provided in .env. Running in development mode.');
     }
-    this.saveData(INITIAL_DATA);
-    return JSON.parse(JSON.stringify(INITIAL_DATA));
   }
 
-  saveData(data) {
+  isConfigured() {
+    return this.isLive && this.supabase !== null;
+  }
+
+  ensureDevStore() {
+    const dir = path.dirname(DATA_FILE);
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    if (!fs.existsSync(DATA_FILE)) {
+      fs.writeFileSync(DATA_FILE, JSON.stringify(INITIAL_DEV_DATA, null, 2), 'utf-8');
+    }
     try {
-      fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf-8');
+      this.devData = JSON.parse(fs.readFileSync(DATA_FILE, 'utf-8'));
     } catch (e) {
-      console.error('Error saving store file:', e.message);
+      this.devData = INITIAL_DEV_DATA;
     }
   }
 
-  persist() {
-    this.saveData(this.data);
+  saveDevStore() {
+    try {
+      fs.writeFileSync(DATA_FILE, JSON.stringify(this.devData, null, 2), 'utf-8');
+    } catch (e) {}
   }
 
-  // --- PROFILES / USERS ---
-  findProfileByEmail(email) {
-    return this.data.profiles.find(p => p.email.toLowerCase() === email.toLowerCase());
-  }
+  // ==========================================
+  // AUTHENTICATION (SUPABASE AUTH)
+  // ==========================================
 
-  findProfileById(id) {
-    return this.data.profiles.find(p => p.id === id);
-  }
+  async signUp(email, password, metadata = {}) {
+    if (this.isConfigured()) {
+      try {
+        const { data, error } = await this.supabase.auth.signUp({
+          email,
+          password: password || 'EcoCyclePass2026!',
+          options: {
+            data: {
+              full_name: metadata.full_name || email.split('@')[0],
+              role: metadata.role || 'USER',
+              phone: metadata.phone || '',
+              address: metadata.address || '',
+              city: metadata.city || 'Bengaluru'
+            }
+          }
+        });
 
-  createProfile(profile) {
+        if (error) throw error;
+
+        // Ensure profiles table has record
+        if (data.user) {
+          const profile = {
+            id: data.user.id,
+            full_name: metadata.full_name || email.split('@')[0],
+            email,
+            role: metadata.role || 'USER',
+            phone: metadata.phone || null,
+            address: metadata.address || null,
+            city: metadata.city || 'Bengaluru',
+            green_points: 50,
+            recycled_kg: 0,
+            co2_avoided_kg: 0,
+            pickups_count: 0,
+            rank: 'Eco Starter (Tier 1)',
+            avatar_url: metadata.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
+          };
+          await this.supabase.from('profiles').upsert(profile);
+          return { user: profile, session: data.session, token: data.session?.access_token };
+        }
+      } catch (err) {
+        console.warn('[Supabase Auth signUp error]:', err.message);
+        throw err;
+      }
+    }
+
+    // Development fallback
+    let existing = this.devData.profiles.find(p => p.email.toLowerCase() === email.toLowerCase());
+    if (existing) throw new Error('User with this email already exists');
     const newProfile = {
-      id: profile.id || `usr_${Date.now()}`,
-      full_name: profile.full_name || 'EcoCycle Member',
-      email: profile.email,
-      phone: profile.phone || '+91 98000 00000',
-      role: profile.role || 'USER',
-      avatar_url: profile.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
-      address: profile.address || 'Bengaluru, India',
-      city: profile.city || 'Bengaluru',
+      id: `usr_${Date.now()}`,
+      full_name: metadata.full_name || email.split('@')[0],
+      email,
+      role: metadata.role || 'USER',
+      phone: metadata.phone || '+91 98000 00000',
+      address: metadata.address || 'Bengaluru, India',
+      city: metadata.city || 'Bengaluru',
+      avatar_url: metadata.avatar_url || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
       green_points: 50,
       recycled_kg: 0,
       co2_avoided_kg: 0,
@@ -333,84 +309,252 @@ class DatabaseService {
       rank: 'Eco Starter (Tier 1)',
       created_at: new Date().toISOString()
     };
-    this.data.profiles.push(newProfile);
-    this.persist();
-    return newProfile;
+    this.devData.profiles.push(newProfile);
+    this.saveDevStore();
+    return { user: newProfile, token: 'mock-jwt-' + newProfile.id };
   }
 
-  updateProfile(id, updates) {
-    const idx = this.data.profiles.findIndex(p => p.id === id);
-    if (idx !== -1) {
-      this.data.profiles[idx] = { ...this.data.profiles[idx], ...updates };
-      this.persist();
-      return this.data.profiles[idx];
+  async signIn(email, password) {
+    if (this.isConfigured()) {
+      try {
+        const { data, error } = await this.supabase.auth.signInWithPassword({
+          email,
+          password: password || 'EcoCyclePass2026!'
+        });
+
+        if (error) throw error;
+
+        let profile = await this.findProfileById(data.user.id);
+        if (!profile) {
+          profile = {
+            id: data.user.id,
+            email: data.user.email,
+            full_name: data.user.user_metadata?.full_name || email.split('@')[0],
+            role: data.user.user_metadata?.role || 'USER'
+          };
+          await this.supabase.from('profiles').upsert(profile);
+        }
+
+        return { user: profile, session: data.session, token: data.session?.access_token };
+      } catch (err) {
+        console.warn('[Supabase Auth signIn error]:', err.message);
+        throw err;
+      }
+    }
+
+    // Dev fallback
+    let profile = this.devData.profiles.find(p => p.email.toLowerCase() === email.toLowerCase());
+    if (!profile) {
+      profile = {
+        id: `usr_${Date.now()}`,
+        full_name: email.split('@')[0].toUpperCase(),
+        email,
+        role: 'USER',
+        green_points: 50,
+        recycled_kg: 0,
+        co2_avoided_kg: 0,
+        pickups_count: 0,
+        rank: 'Eco Starter (Tier 1)',
+        created_at: new Date().toISOString()
+      };
+      this.devData.profiles.push(profile);
+      this.saveDevStore();
+    }
+    return { user: profile, token: 'mock-jwt-' + profile.id };
+  }
+
+  async getUserByToken(token) {
+    if (this.isConfigured() && token && !token.startsWith('mock-')) {
+      try {
+        const { data: { user }, error } = await this.supabase.auth.getUser(token);
+        if (!error && user) {
+          return await this.findProfileById(user.id);
+        }
+      } catch (e) {}
     }
     return null;
   }
 
-  // --- COLLECTORS ---
-  getCollectors() {
-    return this.data.collectors;
+  // ==========================================
+  // PROFILES (USERS)
+  // ==========================================
+
+  async findProfileById(id) {
+    if (this.isConfigured()) {
+      const { data, error } = await this.supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', id)
+        .maybeSingle();
+      if (!error && data) return data;
+    }
+    return this.devData.profiles.find(p => p.id === id) || null;
   }
 
-  getCollectorById(id) {
-    return this.data.collectors.find(c => c.id === id || c.profile_id === id);
+  async findProfileByEmail(email) {
+    if (this.isConfigured()) {
+      const { data, error } = await this.supabase
+        .from('profiles')
+        .select('*')
+        .eq('email', email.toLowerCase())
+        .maybeSingle();
+      if (!error && data) return data;
+    }
+    return this.devData.profiles.find(p => p.email.toLowerCase() === email.toLowerCase()) || null;
   }
 
-  updateCollector(id, updates) {
-    const idx = this.data.collectors.findIndex(c => c.id === id || c.profile_id === id);
+  async updateProfile(id, updates) {
+    if (this.isConfigured()) {
+      const { data, error } = await this.supabase
+        .from('profiles')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .single();
+      if (!error && data) return data;
+    }
+    const idx = this.devData.profiles.findIndex(p => p.id === id);
     if (idx !== -1) {
-      this.data.collectors[idx] = { ...this.data.collectors[idx], ...updates };
-      this.persist();
-      return this.data.collectors[idx];
+      this.devData.profiles[idx] = { ...this.devData.profiles[idx], ...updates };
+      this.saveDevStore();
+      return this.devData.profiles[idx];
     }
     return null;
   }
 
-  // --- EWASTE ITEMS ---
-  getEwasteItems(userId) {
-    if (userId) {
-      return this.data.ewaste_items.filter(item => item.user_id === userId);
+  // ==========================================
+  // COLLECTORS
+  // ==========================================
+
+  async getCollectors() {
+    if (this.isConfigured()) {
+      const { data, error } = await this.supabase
+        .from('collectors')
+        .select('*')
+        .order('rating', { ascending: false });
+      if (!error && data && data.length > 0) return data;
     }
-    return this.data.ewaste_items;
+    return this.devData.collectors;
   }
 
-  createEwasteItem(item) {
+  async getCollectorById(id) {
+    if (this.isConfigured()) {
+      const { data, error } = await this.supabase
+        .from('collectors')
+        .select('*')
+        .eq('id', id)
+        .maybeSingle();
+      if (!error && data) return data;
+    }
+    return this.devData.collectors.find(c => c.id === id || c.profile_id === id) || null;
+  }
+
+  async updateCollector(id, updates) {
+    if (this.isConfigured()) {
+      const { data, error } = await this.supabase
+        .from('collectors')
+        .update(updates)
+        .eq('id', id)
+        .select()
+        .maybeSingle();
+      if (!error && data) return data;
+    }
+    const idx = this.devData.collectors.findIndex(c => c.id === id || c.profile_id === id);
+    if (idx !== -1) {
+      this.devData.collectors[idx] = { ...this.devData.collectors[idx], ...updates };
+      this.saveDevStore();
+      return this.devData.collectors[idx];
+    }
+    return null;
+  }
+
+  // ==========================================
+  // E-WASTE ITEMS
+  // ==========================================
+
+  async getEwasteItems(userId) {
+    if (this.isConfigured()) {
+      let query = this.supabase.from('ewaste_items').select('*').order('created_at', { ascending: false });
+      if (userId) query = query.eq('user_id', userId);
+      const { data, error } = await query;
+      if (!error && data) return data;
+    }
+    if (userId) return this.devData.ewaste_items.filter(i => i.user_id === userId);
+    return this.devData.ewaste_items;
+  }
+
+  async createEwasteItem(item) {
+    if (this.isConfigured()) {
+      const payload = {
+        user_id: item.user_id,
+        image_url: item.image_url,
+        device_name: item.device_name,
+        category: item.category,
+        condition: item.condition,
+        confidence: item.confidence,
+        estimated_value: item.estimated_value,
+        estimated_weight: item.estimated_weight,
+        specs: item.specs || item.ai_result?.specs || null,
+        ai_result: item.ai_result || {},
+        status: item.status || 'SUBMITTED'
+      };
+
+      const { data, error } = await this.supabase
+        .from('ewaste_items')
+        .insert(payload)
+        .select()
+        .single();
+      if (!error && data) return data;
+      console.warn('[Supabase createEwasteItem failed]:', error?.message);
+    }
+
     const newItem = {
       id: `item_${Date.now()}`,
       user_id: item.user_id || 'usr_sruthi_101',
-      image_url: item.image_url || 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80',
-      device_name: item.device_name || 'Electronic Device',
-      category: item.category || 'Computer Equipment',
-      condition: item.condition || 'Grade B+ (Verified)',
-      confidence: item.confidence || 94,
-      estimated_value: item.estimated_value || 1200,
-      estimated_weight: item.estimated_weight || 2.4,
+      image_url: item.image_url,
+      device_name: item.device_name,
+      category: item.category,
+      condition: item.condition,
+      confidence: item.confidence,
+      estimated_value: item.estimated_value,
+      estimated_weight: item.estimated_weight,
       ai_result: item.ai_result || {},
       status: 'SUBMITTED',
       created_at: new Date().toISOString()
     };
-    this.data.ewaste_items.unshift(newItem);
-    this.persist();
+    this.devData.ewaste_items.unshift(newItem);
+    this.saveDevStore();
     return newItem;
   }
 
-  // --- PICKUPS & LIFECYCLE ---
-  getPickups(filter = {}) {
-    let list = this.data.pickups;
-    if (filter.user_id) {
-      list = list.filter(p => p.user_id === filter.user_id);
+  // ==========================================
+  // PICKUPS
+  // ==========================================
+
+  async getPickups(filter = {}) {
+    if (this.isConfigured()) {
+      let query = this.supabase
+        .from('pickups')
+        .select('*, user:profiles(*), collector:collectors(*), item:ewaste_items(*)')
+        .order('created_at', { ascending: false });
+
+      if (filter.user_id) query = query.eq('user_id', filter.user_id);
+      if (filter.collector_id) query = query.eq('collector_id', filter.collector_id);
+
+      const { data, error } = await query;
+      if (!error && data && data.length > 0) return data;
     }
-    if (filter.collector_id) {
-      list = list.filter(p => p.collector_id === filter.collector_id);
-    }
-    return list.map(p => this.populatePickup(p));
+
+    let list = this.devData.pickups;
+    if (filter.user_id) list = list.filter(p => p.user_id === filter.user_id);
+    if (filter.collector_id) list = list.filter(p => p.collector_id === filter.collector_id);
+    return list.map(p => this.populateDevPickup(p));
   }
 
-  populatePickup(pickup) {
-    const user = this.data.profiles.find(u => u.id === pickup.user_id);
-    const collector = this.data.collectors.find(c => c.id === pickup.collector_id);
-    const item = this.data.ewaste_items.find(i => i.id === pickup.ewaste_item_id);
+  populateDevPickup(pickup) {
+    const user = this.devData.profiles.find(u => u.id === pickup.user_id);
+    const collector = this.devData.collectors.find(c => c.id === pickup.collector_id);
+    const item = this.devData.ewaste_items.find(i => i.id === pickup.ewaste_item_id);
     return {
       ...pickup,
       user: user || null,
@@ -419,7 +563,40 @@ class DatabaseService {
     };
   }
 
-  createPickup(params) {
+  async createPickup(params) {
+    if (this.isConfigured()) {
+      const payload = {
+        user_id: params.user_id,
+        collector_id: params.collector_id,
+        ewaste_item_id: params.ewaste_item_id,
+        pickup_address: params.pickup_address,
+        scheduled_date: params.scheduled_date || new Date().toISOString().split('T')[0],
+        scheduled_time: params.scheduled_time || 'Today, 4:00 PM',
+        status: 'REQUESTED',
+        status_note: 'Pickup requested. Matching with certified collector.',
+        progress_percent: 15,
+        user_lat: params.user_lat || 12.9352,
+        user_lng: params.user_lng || 77.6245,
+        collector_lat: params.collector_lat || 12.9716,
+        collector_lng: params.collector_lng || 77.5946
+      };
+
+      const { data, error } = await this.supabase
+        .from('pickups')
+        .insert(payload)
+        .select('*, user:profiles(*), collector:collectors(*), item:ewaste_items(*)')
+        .single();
+
+      if (!error && data) {
+        // Update item status
+        await this.supabase.from('ewaste_items').update({ status: 'SCHEDULED' }).eq('id', params.ewaste_item_id);
+        // Add notification
+        await this.addNotification(params.user_id, 'Pickup Scheduled', `Your pickup ${data.tracking_id} has been booked.`);
+        return data;
+      }
+      console.warn('[Supabase createPickup error]:', error?.message);
+    }
+
     const newPickup = {
       id: `pku_${Date.now()}`,
       tracking_id: `EC-${Math.floor(1000 + Math.random() * 9000)}-BLR`,
@@ -440,29 +617,12 @@ class DatabaseService {
       updated_at: new Date().toISOString()
     };
 
-    this.data.pickups.unshift(newPickup);
-
-    // Update item status
-    const itemIdx = this.data.ewaste_items.findIndex(i => i.id === params.ewaste_item_id);
-    if (itemIdx !== -1) {
-      this.data.ewaste_items[itemIdx].status = 'SCHEDULED';
-    }
-
-    // Add notification
-    this.addNotification(newPickup.user_id, 'Pickup Scheduled', `Your pickup ${newPickup.tracking_id} has been booked.`);
-
-    this.persist();
-    return this.populatePickup(newPickup);
+    this.devData.pickups.unshift(newPickup);
+    this.saveDevStore();
+    return this.populateDevPickup(newPickup);
   }
 
-  updatePickupStatus(pickupId, newStatus) {
-    const idx = this.data.pickups.findIndex(p => p.id === pickupId || p.tracking_id === pickupId);
-    if (idx === -1) return null;
-
-    const pickup = this.data.pickups[idx];
-    pickup.status = newStatus;
-    pickup.updated_at = new Date().toISOString();
-
+  async updatePickupStatus(pickupId, newStatus) {
     let note = '';
     let progress = 20;
 
@@ -480,185 +640,350 @@ class DatabaseService {
         progress = 70;
         break;
       case 'COLLECTED':
-        note = 'E-waste collected and scanned. Secure transit to foundry.';
+        note = 'E-waste collected and weighed. Secure transit to foundry.';
         progress = 85;
-        // Update item status
-        const itemIdx = this.data.ewaste_items.findIndex(i => i.id === pickup.ewaste_item_id);
-        if (itemIdx !== -1) this.data.ewaste_items[itemIdx].status = 'COLLECTED';
         break;
       case 'RECYCLED':
         note = 'Melt & recovery cycle complete. Environmental impact certified.';
         progress = 100;
-        // Handle recycling completion rewards and certificate!
-        this.completeRecycling(pickup);
         break;
       default:
         note = `Status updated to ${newStatus}`;
     }
 
-    pickup.status_note = note;
-    pickup.progress_percent = progress;
-    this.persist();
+    if (this.isConfigured()) {
+      const { data: pickup, error } = await this.supabase
+        .from('pickups')
+        .update({
+          status: newStatus,
+          status_note: note,
+          progress_percent: progress,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', pickupId)
+        .select('*, user:profiles(*), collector:collectors(*), item:ewaste_items(*)')
+        .single();
 
-    return this.populatePickup(pickup);
+      if (!error && pickup) {
+        if (newStatus === 'COLLECTED' && pickup.ewaste_item_id) {
+          await this.supabase.from('ewaste_items').update({ status: 'COLLECTED' }).eq('id', pickup.ewaste_item_id);
+        } else if (newStatus === 'RECYCLED') {
+          await this.handleRecyclingCompletion(pickup);
+        }
+        return pickup;
+      }
+    }
+
+    const idx = this.devData.pickups.findIndex(p => p.id === pickupId || p.tracking_id === pickupId);
+    if (idx !== -1) {
+      const p = this.devData.pickups[idx];
+      p.status = newStatus;
+      p.status_note = note;
+      p.progress_percent = progress;
+      p.updated_at = new Date().toISOString();
+
+      if (newStatus === 'RECYCLED') {
+        this.handleDevRecyclingCompletion(p);
+      }
+      this.saveDevStore();
+      return this.populateDevPickup(p);
+    }
+    return null;
   }
 
-  completeRecycling(pickup) {
-    const item = this.data.ewaste_items.find(i => i.id === pickup.ewaste_item_id) || {
-      device_name: 'Electronic Device',
-      estimated_weight: 2.4,
-      category: 'Computer Equipment'
-    };
-
-    if (item) item.status = 'RECYCLED';
-
-    const weight = Number(item.estimated_weight) || 2.4;
+  async handleRecyclingCompletion(pickup) {
+    const weight = Number(pickup.item?.estimated_weight || 2.4);
     const co2 = Number((weight * 1.75).toFixed(1));
-    const pointsAwarded = Math.round(weight * 40) + 20;
+    const points = Math.round(weight * 40) + 20;
 
-    // 1. Add reward record
-    const reward = {
-      id: `rew_${Date.now()}`,
+    // 1. Rewards
+    await this.supabase.from('rewards').insert({
       user_id: pickup.user_id,
-      points: pointsAwarded,
-      reason: `${item.device_name} Melt & Recovery Cycle Complete`,
-      created_at: new Date().toISOString()
-    };
-    this.data.rewards.unshift(reward);
+      points,
+      reason: `${pickup.item?.device_name || 'Electronics'} Melt & Recovery Complete`
+    });
 
-    // 2. Generate Certificate
-    const certNum = `CERT-EC-2026-${Math.floor(10000 + Math.random() * 90000)}-BLR`;
-    const cert = {
-      id: `cert_${Date.now()}`,
+    // 2. Certificate
+    const certNumber = `CERT-EC-2026-${Math.floor(10000 + Math.random() * 90000)}-BLR`;
+    await this.supabase.from('certificates').insert({
       user_id: pickup.user_id,
       pickup_id: pickup.id,
-      certificate_number: certNum,
-      device_name: item.device_name,
-      batch_id: `Batch #${Math.floor(80000 + Math.random() * 10000)}`,
-      foundry_name: 'Valo CleanMetallurgy & EcoCycle Zurich Partner',
+      certificate_number: certNumber,
+      device_name: pickup.item?.device_name || 'Electronic Asset',
       recycled_weight: weight,
       co2_avoided: co2,
       water_saved_liters: Math.round(weight * 133),
-      green_points_added: pointsAwarded,
+      green_points_added: points,
+      gold_recovered_grams: `${(weight * 0.014).toFixed(3)}g 24K Gold`,
+      copper_recovered_grams: `${(weight * 5.9).toFixed(1)}g Pure Copper`
+    });
+
+    // 3. Update Profiles
+    if (pickup.user) {
+      const newPoints = (pickup.user.green_points || 0) + points;
+      const newRecycled = Number(((pickup.user.recycled_kg || 0) + weight).toFixed(1));
+      const newCo2 = Number(((pickup.user.co2_avoided_kg || 0) + co2).toFixed(1));
+      const newCount = (pickup.user.pickups_count || 0) + 1;
+      const rank = newPoints >= 500 ? 'Planet Protector (Tier 5)' : 'Eco Warrior (Tier 4)';
+
+      await this.supabase.from('profiles').update({
+        green_points: newPoints,
+        recycled_kg: newRecycled,
+        co2_avoided_kg: newCo2,
+        pickups_count: newCount,
+        rank
+      }).eq('id', pickup.user_id);
+    }
+
+    // 4. Update Collector earnings
+    if (pickup.collector_id) {
+      const addedValue = Number(pickup.item?.estimated_value || 1200);
+      await this.supabase.rpc('increment_collector_earnings', {
+        col_id: pickup.collector_id,
+        val: addedValue
+      }).catch(async () => {
+        // Fallback update
+        if (pickup.collector) {
+          await this.supabase.from('collectors').update({
+            completed_pickups: (pickup.collector.completed_pickups || 0) + 1,
+            total_earnings: (pickup.collector.total_earnings || 0) + addedValue
+          }).eq('id', pickup.collector_id);
+        }
+      });
+    }
+
+    // 5. Notification
+    await this.addNotification(
+      pickup.user_id,
+      'Recycling Completed! 🌱',
+      `Your ${pickup.item?.device_name || 'device'} has been recycled. +${points} Green Points credited!`
+    );
+  }
+
+  handleDevRecyclingCompletion(pickup) {
+    const item = this.devData.ewaste_items.find(i => i.id === pickup.ewaste_item_id);
+    const weight = Number(item?.estimated_weight || 2.4);
+    const co2 = Number((weight * 1.75).toFixed(1));
+    const points = Math.round(weight * 40) + 20;
+
+    this.devData.rewards.unshift({
+      id: `rew_${Date.now()}`,
+      user_id: pickup.user_id,
+      points,
+      reason: `${item?.device_name || 'Device'} Melt & Recovery Complete`,
+      created_at: new Date().toISOString()
+    });
+
+    const certNumber = `CERT-EC-2026-${Math.floor(10000 + Math.random() * 90000)}-BLR`;
+    this.devData.certificates.unshift({
+      id: `cert_${Date.now()}`,
+      user_id: pickup.user_id,
+      pickup_id: pickup.id,
+      certificate_number: certNumber,
+      device_name: item?.device_name || 'Electronic Asset',
+      recycled_weight: weight,
+      co2_avoided: co2,
+      water_saved_liters: Math.round(weight * 133),
+      green_points_added: points,
       gold_recovered_grams: `${(weight * 0.014).toFixed(3)}g 24K Gold`,
       copper_recovered_grams: `${(weight * 5.9).toFixed(1)}g Pure Copper`,
       verification_status: '100% Chain-of-Custody Verified',
       rank_unlocked: 'Eco Warrior Rank (Tier 4)',
       issued_at: new Date().toISOString()
-    };
-    this.data.certificates.unshift(cert);
+    });
 
-    // 3. Update User profile metrics
-    const user = this.data.profiles.find(u => u.id === pickup.user_id);
+    const user = this.devData.profiles.find(u => u.id === pickup.user_id);
     if (user) {
-      user.green_points = (user.green_points || 0) + pointsAwarded;
+      user.green_points = (user.green_points || 0) + points;
       user.recycled_kg = Number(((user.recycled_kg || 0) + weight).toFixed(1));
       user.co2_avoided_kg = Number(((user.co2_avoided_kg || 0) + co2).toFixed(1));
       user.pickups_count = (user.pickups_count || 0) + 1;
       if (user.green_points >= 500) user.rank = 'Planet Protector (Tier 5)';
       else if (user.green_points >= 300) user.rank = 'Eco Warrior (Tier 4)';
     }
+  }
 
-    // 4. Update collector metrics
-    const collector = this.data.collectors.find(c => c.id === pickup.collector_id);
-    if (collector) {
-      collector.completed_pickups = (collector.completed_pickups || 0) + 1;
-      collector.total_earnings = (collector.total_earnings || 0) + (item.estimated_value || 800);
+  // ==========================================
+  // CERTIFICATES
+  // ==========================================
+
+  async getCertificates(userId) {
+    if (this.isConfigured()) {
+      let query = this.supabase.from('certificates').select('*').order('issued_at', { ascending: false });
+      if (userId) query = query.eq('user_id', userId);
+      const { data, error } = await query;
+      if (!error && data && data.length > 0) return data;
     }
-
-    // 5. Send notification
-    this.addNotification(
-      pickup.user_id,
-      'Recycling Completed! 🌱',
-      `Your ${item.device_name} has been responsibly recycled. +${pointsAwarded} Green Points credited!`
-    );
+    if (userId) return this.devData.certificates.filter(c => c.user_id === userId);
+    return this.devData.certificates;
   }
 
-  // --- CERTIFICATES ---
-  getCertificates(userId) {
-    if (userId) {
-      return this.data.certificates.filter(c => c.user_id === userId);
+  async getCertificateById(id) {
+    if (this.isConfigured()) {
+      const { data, error } = await this.supabase
+        .from('certificates')
+        .select('*')
+        .or(`id.eq.${id},certificate_number.eq.${id}`)
+        .maybeSingle();
+      if (!error && data) return data;
     }
-    return this.data.certificates;
+    return this.devData.certificates.find(c => c.id === id || c.certificate_number === id) || null;
   }
 
-  getCertificateById(id) {
-    return this.data.certificates.find(c => c.id === id || c.certificate_number === id);
+  // ==========================================
+  // REWARDS & NOTIFICATIONS
+  // ==========================================
+
+  async getRewards(userId) {
+    if (this.isConfigured()) {
+      let query = this.supabase.from('rewards').select('*').order('created_at', { ascending: false });
+      if (userId) query = query.eq('user_id', userId);
+      const { data, error } = await query;
+      if (!error && data && data.length > 0) return data;
+    }
+    if (userId) return this.devData.rewards.filter(r => r.user_id === userId);
+    return this.devData.rewards;
   }
 
-  // --- REWARDS & NOTIFICATIONS ---
-  getRewards(userId) {
-    if (userId) return this.data.rewards.filter(r => r.user_id === userId);
-    return this.data.rewards;
+  async getNotifications(userId) {
+    if (this.isConfigured()) {
+      let query = this.supabase.from('notifications').select('*').order('created_at', { ascending: false });
+      if (userId) query = query.eq('user_id', userId);
+      const { data, error } = await query;
+      if (!error && data && data.length > 0) return data;
+    }
+    if (userId) return this.devData.notifications.filter(n => n.user_id === userId);
+    return this.devData.notifications;
   }
 
-  getNotifications(userId) {
-    if (userId) return this.data.notifications.filter(n => n.user_id === userId);
-    return this.data.notifications;
-  }
-
-  addNotification(userId, title, message) {
+  async addNotification(userId, title, message) {
+    if (this.isConfigured()) {
+      const { data, error } = await this.supabase
+        .from('notifications')
+        .insert({ user_id: userId, title, message, read: false })
+        .select()
+        .single();
+      if (!error && data) return data;
+    }
     const notif = {
-      id: `notif_${Date.now()}_${Math.random().toString(36).substring(7)}`,
+      id: `notif_${Date.now()}`,
       user_id: userId,
       title,
       message,
       read: false,
       created_at: new Date().toISOString()
     };
-    this.data.notifications.unshift(notif);
-    this.persist();
+    this.devData.notifications.unshift(notif);
+    this.saveDevStore();
     return notif;
   }
 
-  markNotificationRead(id) {
-    const notif = this.data.notifications.find(n => n.id === id);
+  async markNotificationRead(id) {
+    if (this.isConfigured()) {
+      await this.supabase.from('notifications').update({ read: true }).eq('id', id);
+    }
+    const notif = this.devData.notifications.find(n => n.id === id);
     if (notif) {
       notif.read = true;
-      this.persist();
+      this.saveDevStore();
     }
     return notif;
   }
 
-  // --- ADMIN ANALYTICS ---
-  getAdminStats() {
-    const totalUsers = this.data.profiles.length;
-    const verifiedCollectors = this.data.collectors.filter(c => c.verification_status === 'VERIFIED').length;
-    const pendingCollectors = this.data.collectors.filter(c => c.verification_status === 'PENDING').length;
-    const totalPickups = this.data.pickups.length;
-    
-    let totalWeight = 0;
-    let totalCo2 = 0;
-    const categoryCounts = {};
+  // ==========================================
+  // SUPABASE STORAGE FOR E-WASTE IMAGES
+  // ==========================================
 
-    this.data.ewaste_items.forEach(item => {
-      totalWeight += Number(item.estimated_weight) || 0;
-      const cat = item.category || 'Other';
-      categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
-    });
+  async uploadEwasteImage(buffer, originalFilename, mimeType = 'image/jpeg') {
+    if (this.isConfigured() && buffer && buffer.length > 0) {
+      try {
+        const ext = path.extname(originalFilename || '') || '.jpg';
+        const filename = `ewaste_${Date.now()}_${Math.random().toString(36).substring(7)}${ext}`;
 
-    totalCo2 = Number((totalWeight * 1.75).toFixed(1));
+        const { data, error } = await this.supabase.storage
+          .from('ewaste-images')
+          .upload(filename, buffer, {
+            contentType: mimeType,
+            upsert: true
+          });
 
-    const categoryBreakdown = Object.entries(categoryCounts).map(([name, value]) => ({
-      name,
-      value
-    }));
+        if (!error && data) {
+          const { data: publicUrlData } = this.supabase.storage
+            .from('ewaste-images')
+            .getPublicUrl(filename);
+          return publicUrlData?.publicUrl;
+        }
+        console.warn('[Supabase Storage upload warning]:', error?.message);
+      } catch (err) {
+        console.warn('[Supabase Storage upload error]:', err.message);
+      }
+    }
+    return null;
+  }
 
-    const monthlyTrend = [
-      { month: 'Jun', weight: 45, pickups: 12 },
-      { month: 'Jul', weight: 85, pickups: 24 },
-      { month: 'Aug', weight: 140, pickups: 38 },
-      { month: 'Sep', weight: 210, pickups: 55 },
-      { month: 'Oct', weight: 285, pickups: 78 }
-    ];
+  // ==========================================
+  // ADMIN STATS
+  // ==========================================
 
-    const statusDistribution = [
-      { status: 'REQUESTED', count: this.data.pickups.filter(p => p.status === 'REQUESTED').length },
-      { status: 'ACCEPTED', count: this.data.pickups.filter(p => p.status === 'ACCEPTED').length },
-      { status: 'ON_THE_WAY', count: this.data.pickups.filter(p => p.status === 'ON_THE_WAY').length },
-      { status: 'COLLECTED', count: this.data.pickups.filter(p => p.status === 'COLLECTED').length },
-      { status: 'RECYCLED', count: this.data.pickups.filter(p => p.status === 'RECYCLED').length }
-    ];
+  async getAdminStats() {
+    if (this.isConfigured()) {
+      try {
+        const [usersRes, colsRes, itemsRes, pickupsRes] = await Promise.all([
+          this.supabase.from('profiles').select('id', { count: 'exact' }),
+          this.supabase.from('collectors').select('*'),
+          this.supabase.from('ewaste_items').select('*'),
+          this.supabase.from('pickups').select('*')
+        ]);
+
+        const totalUsers = usersRes.count || usersRes.data?.length || 0;
+        const collectors = colsRes.data || [];
+        const items = itemsRes.data || [];
+        const pickups = pickupsRes.data || [];
+
+        let totalWeight = items.reduce((acc, i) => acc + (Number(i.estimated_weight) || 0), 0);
+        let totalCo2 = Number((totalWeight * 1.75).toFixed(1));
+
+        const categoryCounts = {};
+        items.forEach(i => {
+          const cat = i.category || 'Other';
+          categoryCounts[cat] = (categoryCounts[cat] || 0) + 1;
+        });
+
+        return {
+          totalUsers,
+          verifiedCollectors: collectors.filter(c => c.verification_status === 'VERIFIED').length,
+          pendingCollectors: collectors.filter(c => c.verification_status === 'PENDING').length,
+          totalPickups: pickups.length,
+          totalRecycledWeightKg: Number(totalWeight.toFixed(1)),
+          totalCo2AvoidedKg: totalCo2,
+          categoryBreakdown: Object.entries(categoryCounts).map(([name, value]) => ({ name, value })),
+          monthlyTrend: [
+            { month: 'Jun', weight: 45, pickups: 12 },
+            { month: 'Jul', weight: 85, pickups: 24 },
+            { month: 'Aug', weight: 140, pickups: 38 },
+            { month: 'Sep', weight: 210, pickups: 55 },
+            { month: 'Oct', weight: Number(totalWeight.toFixed(1)) || 285, pickups: pickups.length || 78 }
+          ],
+          statusDistribution: [
+            { status: 'REQUESTED', count: pickups.filter(p => p.status === 'REQUESTED').length },
+            { status: 'ACCEPTED', count: pickups.filter(p => p.status === 'ACCEPTED').length },
+            { status: 'ON_THE_WAY', count: pickups.filter(p => p.status === 'ON_THE_WAY').length },
+            { status: 'COLLECTED', count: pickups.filter(p => p.status === 'COLLECTED').length },
+            { status: 'RECYCLED', count: pickups.filter(p => p.status === 'RECYCLED').length }
+          ]
+        };
+      } catch (err) {
+        console.warn('[Supabase getAdminStats failed]:', err.message);
+      }
+    }
+
+    // Dev stats
+    const totalUsers = this.devData.profiles.length;
+    const verifiedCollectors = this.devData.collectors.filter(c => c.verification_status === 'VERIFIED').length;
+    const pendingCollectors = this.devData.collectors.filter(c => c.verification_status === 'PENDING').length;
+    const totalPickups = this.devData.pickups.length;
+    let totalWeight = this.devData.ewaste_items.reduce((acc, i) => acc + (Number(i.estimated_weight) || 0), 0);
+    let totalCo2 = Number((totalWeight * 1.75).toFixed(1));
 
     return {
       totalUsers,
@@ -667,11 +992,27 @@ class DatabaseService {
       totalPickups,
       totalRecycledWeightKg: Number(totalWeight.toFixed(1)),
       totalCo2AvoidedKg: totalCo2,
-      categoryBreakdown,
-      monthlyTrend,
-      statusDistribution
+      categoryBreakdown: [
+        { name: 'Computer Equipment', value: 4 },
+        { name: 'Mobile Phones', value: 2 },
+        { name: 'Cables & Accessories', value: 1 }
+      ],
+      monthlyTrend: [
+        { month: 'Jun', weight: 45, pickups: 12 },
+        { month: 'Jul', weight: 85, pickups: 24 },
+        { month: 'Aug', weight: 140, pickups: 38 },
+        { month: 'Sep', weight: 210, pickups: 55 },
+        { month: 'Oct', weight: 285, pickups: 78 }
+      ],
+      statusDistribution: [
+        { status: 'REQUESTED', count: this.devData.pickups.filter(p => p.status === 'REQUESTED').length },
+        { status: 'ACCEPTED', count: this.devData.pickups.filter(p => p.status === 'ACCEPTED').length },
+        { status: 'ON_THE_WAY', count: this.devData.pickups.filter(p => p.status === 'ON_THE_WAY').length },
+        { status: 'COLLECTED', count: this.devData.pickups.filter(p => p.status === 'COLLECTED').length },
+        { status: 'RECYCLED', count: this.devData.pickups.filter(p => p.status === 'RECYCLED').length }
+      ]
     };
   }
 }
 
-export const db = new DatabaseService();
+export const db = new SupabaseDataService();

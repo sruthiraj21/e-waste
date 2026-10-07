@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Bell, Sparkles, Truck, ShieldCheck, User, LogOut, CheckCircle2, ChevronDown, Leaf } from 'lucide-react';
+import { Bell, Sparkles, Truck, ShieldCheck, User, LogOut, CheckCircle2, ChevronDown, Leaf, Database } from 'lucide-react';
 import { api } from '../services/api';
 
 export default function Navbar({ onNavigate, activeTab }) {
@@ -8,6 +8,7 @@ export default function Navbar({ onNavigate, activeTab }) {
   const [notifications, setNotifications] = useState([]);
   const [showNotifs, setShowNotifs] = useState(false);
   const [showRoleMenu, setShowRoleMenu] = useState(false);
+  const [status, setStatus] = useState(null);
 
   useEffect(() => {
     if (currentUser?.id) {
@@ -15,6 +16,8 @@ export default function Navbar({ onNavigate, activeTab }) {
         if (Array.isArray(data)) setNotifications(data);
       }).catch(() => {});
     }
+
+    api.getStatus().then(s => setStatus(s)).catch(() => {});
   }, [currentUser]);
 
   const unreadCount = notifications.filter(n => !n.read).length;
@@ -122,10 +125,19 @@ export default function Navbar({ onNavigate, activeTab }) {
           </button>
         </nav>
 
-        {/* Right Section: Role Switcher & Profile Avatar */}
+        {/* Right Section: Status Indicator, Role Switcher & Profile Avatar */}
         <div className="flex items-center gap-3">
           
-          {/* Quick Role Switcher Pill (Critical for Hackathon demo) */}
+          {/* Live Supabase Connectivity Badge */}
+          <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white border border-[#1A1F1C]/5 text-[11px] font-semibold text-gray-600 shadow-xs">
+            <span className={`w-2 h-2 rounded-full ${status?.supabase?.configured ? (status?.supabase?.reachable ? 'bg-[#10B981]' : 'bg-amber-400') : 'bg-gray-400'}`}></span>
+            <span className="text-gray-500">DB:</span>
+            <span className={status?.supabase?.configured ? 'text-[#0F2D1F] font-bold' : 'text-gray-500'}>
+              {status?.supabase?.configured ? (status?.supabase?.reachable ? 'Supabase' : 'Connecting') : 'Supabase Ready'}
+            </span>
+          </div>
+
+          {/* Quick Role Switcher Pill */}
           <div className="relative">
             <button
               onClick={() => setShowRoleMenu(!showRoleMenu)}
@@ -141,7 +153,7 @@ export default function Navbar({ onNavigate, activeTab }) {
             {showRoleMenu && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border border-[#1A1F1C]/10 py-2 z-50 animate-in fade-in slide-in-from-top-2">
                 <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-gray-400">
-                  Switch Hackathon Role
+                  Switch Role
                 </div>
                 <button
                   onClick={() => { switchRole('USER'); setShowRoleMenu(false); onNavigate('dashboard'); }}
