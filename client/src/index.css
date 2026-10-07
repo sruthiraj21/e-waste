@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-primary: #0f2d1f;
+    --color-primary-hover: #17422e;
+    --color-secondary: #10b981;
+    --color-secondary-hover: #059669;
+    --color-tertiary: #84cc16;
+    --color-neutral: #1a1f1c;
+    --color-canvas: #f6fbf5;
+    --color-surface: #ffffff;
+    --color-surface-mint: #ebefea;
+    --color-tint: #d1fae5;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-neutral);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, .font-serif-eco {
+    font-family: 'Newsreader', Georgia, serif;
+  }
+
+  .font-tabular {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Custom Stitch Aesthetics & Micro-Animations */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 8px 1px rgba(132, 204, 22, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 16px 4px rgba(132, 204, 22, 0.45);
+  }
+}
+
+@keyframes scanReticle {
+  0% {
+    top: 0%;
+    opacity: 0.8;
+  }
+  50% {
+    top: 90%;
+    opacity: 0.4;
+  }
+  100% {
+    top: 0%;
+    opacity: 0.8;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2.5s infinite ease-in-out;
+}
+
+.animate-scan-line {
+  animation: scanReticle 2.8s infinite ease-in-out;
+}
+
+/* Whisper Borders and Diffuse Elevation from Stitch Spec */
+.stitch-card {
+  background-color: #ffffff;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(26, 31, 28, 0.06);
+  box-shadow: 0 12px 32px -8px rgba(15, 45, 31, 0.05);
+}
+
+.stitch-card-vault {
+  background-color: #0f2d1f;
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f9faf7;
+  box-shadow: 0 20px 48px -12px rgba(15, 45, 31, 0.18);
+}
+
+.stitch-pill-btn {
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.stitch-pill-btn:active {
+  transform: scale(0.98);
+}
+
+.stitch-badge-mint {
+  background-color: rgba(209, 250, 229, 0.7);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  color: #0f2d1f;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+/* Leaflet container fixes */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  z-index: 10;
+}

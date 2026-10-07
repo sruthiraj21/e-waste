@@ -1,0 +1,364 @@
+{
+  "profiles": [
+    {
+      "id": "usr_sruthi_101",
+      "full_name": "Sruthi Sundaram",
+      "email": "sruthi@ecocycle.in",
+      "phone": "+91 98450 12345",
+      "role": "USER",
+      "avatar_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+      "address": "Flat 402, Green Glen Layout, Bellandur",
+      "city": "Bengaluru",
+      "green_points": 566,
+      "recycled_kg": 14.9,
+      "co2_avoided_kg": 12.4,
+      "pickups_count": 7,
+      "rank": "Planet Protector (Tier 5)",
+      "created_at": "2026-08-15T10:00:00Z"
+    },
+    {
+      "id": "col_vikram_201",
+      "full_name": "Vikram Sharma",
+      "email": "vikram@greencycle.in",
+      "phone": "+91 98860 98765",
+      "role": "COLLECTOR",
+      "avatar_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
+      "address": "Plot 12, Industrial Area, Koramangala",
+      "city": "Bengaluru",
+      "created_at": "2026-07-01T09:00:00Z"
+    },
+    {
+      "id": "adm_aisha_301",
+      "full_name": "Aisha Rao",
+      "email": "aisha@ecocycle.in",
+      "phone": "+91 97410 54321",
+      "role": "ADMIN",
+      "avatar_url": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80",
+      "address": "EcoCycle HQ, Indiranagar",
+      "city": "Bengaluru",
+      "created_at": "2026-06-01T08:00:00Z"
+    }
+  ],
+  "collectors": [
+    {
+      "id": "col_rec_1",
+      "profile_id": "col_vikram_201",
+      "business_name": "GreenCycle Services",
+      "verification_status": "VERIFIED",
+      "rating": 4.8,
+      "reviews_count": 342,
+      "available": true,
+      "service_area": "Indiranagar, Koramangala & HSR, Bengaluru",
+      "distance_km": 2.4,
+      "eta_text": "30–45 mins",
+      "badges": [
+        "Zero-Emission EV",
+        "ISO 14001 Certified",
+        "Digital Custody Seal"
+      ],
+      "latitude": 12.9716,
+      "longitude": 77.5946,
+      "supported_categories": [
+        "Computer Equipment",
+        "Mobile Phones",
+        "Home Appliances",
+        "Cables & Accessories"
+      ],
+      "completed_pickups": 185,
+      "total_earnings": 49700
+    },
+    {
+      "id": "col_rec_2",
+      "profile_id": "col_vikram_201",
+      "business_name": "EcoVan Bangalore",
+      "verification_status": "VERIFIED",
+      "rating": 4.7,
+      "reviews_count": 198,
+      "available": true,
+      "service_area": "Whitefield & Marathahalli, Bengaluru",
+      "distance_km": 3.8,
+      "eta_text": "Today 4:00 PM",
+      "badges": [
+        "R2 Certified",
+        "Solar EV Fleet"
+      ],
+      "latitude": 12.9698,
+      "longitude": 77.7499,
+      "supported_categories": [
+        "Computer Equipment",
+        "Mobile Phones",
+        "Peripherals"
+      ],
+      "completed_pickups": 112,
+      "total_earnings": 31200
+    },
+    {
+      "id": "col_rec_3",
+      "profile_id": "col_vikram_201",
+      "business_name": "Urban Green Hub",
+      "verification_status": "VERIFIED",
+      "rating": 4.9,
+      "reviews_count": 512,
+      "available": true,
+      "service_area": "Jayanagar & JP Nagar, Bengaluru",
+      "distance_km": 1.9,
+      "eta_text": "Tomorrow 9:00 AM",
+      "badges": [
+        "Govt Authorized Foundry",
+        "Zero-Landfill Seal"
+      ],
+      "latitude": 12.925,
+      "longitude": 77.5938,
+      "supported_categories": [
+        "Computer Equipment",
+        "Home Appliances",
+        "Cables & Accessories"
+      ],
+      "completed_pickups": 320,
+      "total_earnings": 94000
+    }
+  ],
+  "ewaste_items": [
+    {
+      "id": "item_1791358933284",
+      "user_id": "usr_sruthi_101",
+      "image_url": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",
+      "device_name": "Laptop (MacBook Pro / Dell XPS)",
+      "category": "Computer Equipment",
+      "condition": "Grade B+ (Verified)",
+      "confidence": 94,
+      "estimated_value": 1200,
+      "estimated_weight": 2.4,
+      "ai_result": {
+        "category": "Computer Equipment",
+        "deviceName": "Laptop (MacBook Pro / Dell XPS)",
+        "type": "Laptop",
+        "condition": "Grade B+ (Micro-optical wear, Battery intact)",
+        "confidence": 94,
+        "estimatedValue": 1200,
+        "estimatedWeight": 2.4,
+        "co2Avoided": 4.2,
+        "points": 100,
+        "specs": "Aluminum Unibody Chassis • Core i7 / M-Series Architecture",
+        "traceMetals": {
+          "gold": "0.034g",
+          "copper": "14.2g",
+          "aluminum": "High Pure (89% Recovery)",
+          "rareEarths": "Neodymium & Cobalt Intact"
+        },
+        "recoveryYield": "89%",
+        "hazardStatus": "Zero Hazardous Leaks Detected",
+        "sanitizationNotice": "NIST 800-88 Cryptographic Sanitization Recommended",
+        "source": "ECOCYCLE_NEURAL_VISION"
+      },
+      "status": "RECYCLED",
+      "created_at": "2026-10-07T07:42:13.284Z"
+    },
+    {
+      "id": "item_laptop_01",
+      "user_id": "usr_sruthi_101",
+      "image_url": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80",
+      "device_name": "MacBook Pro 14\"",
+      "category": "Computer Equipment",
+      "condition": "Grade B+ (Functional with minor casing wear)",
+      "confidence": 94,
+      "estimated_value": 1200,
+      "estimated_weight": 2.4,
+      "ai_result": {
+        "recoveryYield": "89%",
+        "gold": "0.034g",
+        "copper": "14.2g",
+        "specs": "Aluminum Unibody Chassis • Core i7 / M1 Pro",
+        "hazardStatus": "Zero Hazardous Leaks"
+      },
+      "status": "IN_TRANSIT",
+      "created_at": "2026-10-06T08:30:00Z"
+    },
+    {
+      "id": "item_iphone_02",
+      "user_id": "usr_sruthi_101",
+      "image_url": "https://images.unsplash.com/photo-1510557880182-3d4d3cba35a5?auto=format&fit=crop&w=600&q=80",
+      "device_name": "iPhone 13 Pro",
+      "category": "Mobile Phones",
+      "condition": "Grade A- (Motherboard intact)",
+      "confidence": 96,
+      "estimated_value": 950,
+      "estimated_weight": 0.24,
+      "ai_result": {
+        "recoveryYield": "93%",
+        "gold": "0.024g",
+        "copper": "8.6g"
+      },
+      "status": "RECYCLED",
+      "created_at": "2026-10-05T14:15:00Z"
+    },
+    {
+      "id": "item_headphone_03",
+      "user_id": "usr_sruthi_101",
+      "image_url": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80",
+      "device_name": "Sony WH-1000XM4",
+      "category": "Peripherals",
+      "condition": "Refurbished Grade B",
+      "confidence": 92,
+      "estimated_value": 700,
+      "estimated_weight": 0.35,
+      "status": "RECYCLED",
+      "created_at": "2026-10-01T11:20:00Z"
+    },
+    {
+      "id": "item_charger_04",
+      "user_id": "usr_sruthi_101",
+      "image_url": "https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=600&q=80",
+      "device_name": "Dell XPS 15 Charger",
+      "category": "Cables & Accessories",
+      "condition": "Pure Copper Harvested",
+      "confidence": 97,
+      "estimated_value": 220,
+      "estimated_weight": 0.45,
+      "status": "RECYCLED",
+      "created_at": "2026-09-24T16:00:00Z"
+    }
+  ],
+  "pickups": [
+    {
+      "id": "pku_1791358933300",
+      "tracking_id": "EC-7270-BLR",
+      "user_id": "usr_sruthi_101",
+      "collector_id": "col_rec_1",
+      "ewaste_item_id": "item_1791358933284",
+      "pickup_address": "Flat 402, Bellandur, Bengaluru",
+      "scheduled_date": "2026-10-07",
+      "scheduled_time": "Today, 4:00 PM",
+      "status": "RECYCLED",
+      "status_note": "Melt & recovery cycle complete. Environmental impact certified.",
+      "progress_percent": 100,
+      "user_lat": 12.9352,
+      "user_lng": 77.6245,
+      "collector_lat": 12.9716,
+      "collector_lng": 77.5946,
+      "created_at": "2026-10-07T07:42:13.300Z",
+      "updated_at": "2026-10-07T07:42:13.335Z"
+    },
+    {
+      "id": "pku_active_8954",
+      "user_id": "usr_sruthi_101",
+      "collector_id": "col_rec_1",
+      "ewaste_item_id": "item_laptop_01",
+      "pickup_address": "Flat 402, Green Glen Layout, Bellandur, Bengaluru 560103",
+      "scheduled_date": "2026-10-07",
+      "scheduled_time": "Today, 3:30 PM",
+      "status": "ON_THE_WAY",
+      "status_note": "Courier en route to Valo Foundry • 70% complete • ETA 25 mins",
+      "progress_percent": 70,
+      "tracking_id": "EC-8954-BLR",
+      "user_lat": 12.9352,
+      "user_lng": 77.6245,
+      "collector_lat": 12.951,
+      "collector_lng": 77.618,
+      "created_at": "2026-10-07T09:00:00Z",
+      "updated_at": "2026-10-07T10:30:00Z"
+    }
+  ],
+  "rewards": [
+    {
+      "id": "rew_1791358933336",
+      "user_id": "usr_sruthi_101",
+      "points": 116,
+      "reason": "Laptop (MacBook Pro / Dell XPS) Melt & Recovery Cycle Complete",
+      "created_at": "2026-10-07T07:42:13.336Z"
+    },
+    {
+      "id": "rew_1",
+      "user_id": "usr_sruthi_101",
+      "points": 100,
+      "reason": "iPhone 13 Pro Melt & Recovery Cycle Complete",
+      "created_at": "2026-10-06T18:00:00Z"
+    },
+    {
+      "id": "rew_2",
+      "user_id": "usr_sruthi_101",
+      "points": 150,
+      "reason": "Sony WH-1000XM4 Refurbished & Re-homed",
+      "created_at": "2026-10-02T12:00:00Z"
+    },
+    {
+      "id": "rew_3",
+      "user_id": "usr_sruthi_101",
+      "points": 50,
+      "reason": "Dell XPS Charger Copper Harvested",
+      "created_at": "2026-09-25T17:00:00Z"
+    }
+  ],
+  "certificates": [
+    {
+      "id": "cert_1791358933336",
+      "user_id": "usr_sruthi_101",
+      "pickup_id": "pku_1791358933300",
+      "certificate_number": "CERT-EC-2026-22026-BLR",
+      "device_name": "Laptop (MacBook Pro / Dell XPS)",
+      "batch_id": "Batch #85612",
+      "foundry_name": "Valo CleanMetallurgy & EcoCycle Zurich Partner",
+      "recycled_weight": 2.4,
+      "co2_avoided": 4.2,
+      "water_saved_liters": 319,
+      "green_points_added": 116,
+      "gold_recovered_grams": "0.034g 24K Gold",
+      "copper_recovered_grams": "14.2g Pure Copper",
+      "verification_status": "100% Chain-of-Custody Verified",
+      "rank_unlocked": "Eco Warrior Rank (Tier 4)",
+      "issued_at": "2026-10-07T07:42:13.336Z"
+    },
+    {
+      "id": "cert_89120",
+      "user_id": "usr_sruthi_101",
+      "pickup_id": "pku_completed_legacy",
+      "certificate_number": "CERT-EC-2026-89120-BLR",
+      "device_name": "iPhone 13 Pro (128GB Midnight)",
+      "batch_id": "Batch #89120",
+      "foundry_name": "Valo CleanMetallurgy & EcoCycle Zurich Partner",
+      "recycled_weight": 2.4,
+      "co2_avoided": 1.8,
+      "water_saved_liters": 320,
+      "green_points_added": 100,
+      "gold_recovered_grams": "0.034g 24K Gold",
+      "copper_recovered_grams": "14.2g Pure Copper",
+      "verification_status": "100% Chain-of-Custody Verified",
+      "rank_unlocked": "Eco Warrior Rank (Tier 4)",
+      "issued_at": "2026-10-06T18:05:00Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "notif_1791358933336_xicj5x",
+      "user_id": "usr_sruthi_101",
+      "title": "Recycling Completed! 🌱",
+      "message": "Your Laptop (MacBook Pro / Dell XPS) has been responsibly recycled. +116 Green Points credited!",
+      "read": false,
+      "created_at": "2026-10-07T07:42:13.336Z"
+    },
+    {
+      "id": "notif_1791358933300_rz91w",
+      "user_id": "usr_sruthi_101",
+      "title": "Pickup Scheduled",
+      "message": "Your pickup EC-7270-BLR has been booked.",
+      "read": false,
+      "created_at": "2026-10-07T07:42:13.300Z"
+    },
+    {
+      "id": "notif_1",
+      "user_id": "usr_sruthi_101",
+      "title": "Courier on the way 🛵",
+      "message": "Vikram from GreenCycle Services is arriving in ~25 mins for your MacBook Pro.",
+      "read": false,
+      "created_at": "2026-10-07T10:30:00Z"
+    },
+    {
+      "id": "notif_2",
+      "user_id": "usr_sruthi_101",
+      "title": "Certificate Ready 🌱",
+      "message": "Recycling certificate CERT-EC-2026-89120 is verified and ready to view.",
+      "read": true,
+      "created_at": "2026-10-06T18:10:00Z"
+    }
+  ]
+}
